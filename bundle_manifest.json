@@ -11,8 +11,8 @@
       "sha256": "484c494b2a3ff43d06eb252fa29c765b46541aa9f30430fc047b8618a79fa0ee"
     },
     "README.md": {
-      "size_bytes": 12952,
-      "sha256": "f3bcdf7abfe7d5ea1f1c78388d3db7fe8a42f21957cc007a770dc93a076abd97"
+      "size_bytes": 13335,
+      "sha256": "943ccc45f59340cf9c8a9502660768bb9f0550235e0956833b4849ad38f8cdb6"
     },
     "LICENSE": {
       "size_bytes": 1095,
@@ -39,12 +39,12 @@
       "sha256": "fb48a9b71e5363f4ebd18e54fe4388683322034768a5997e43dced1464eb0593"
     },
     "apps/app.py": {
-      "size_bytes": 10143,
-      "sha256": "b8367b9fc2d972d31c8186a27e36c7abdca24422f802e29da05e6e117443efd6"
+      "size_bytes": 10783,
+      "sha256": "61d4f189d914eb8e7950ade7ee9b95fbbfc0fa5349a700645d7d7603e2cd202d"
     },
     "apps/test_app.py": {
-      "size_bytes": 4120,
-      "sha256": "772bf51d31dac11874ffe58570da205d89a0477c1b60292b610b098c6d2d1bb2"
+      "size_bytes": 5840,
+      "sha256": "85e517a784e9cd40993eb1c480dd27dfa821bab0aa64191a699da27282d2d441"
     },
     "apps/desktop_test_app.py": {
       "size_bytes": 20736,

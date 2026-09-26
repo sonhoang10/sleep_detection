@@ -83,7 +83,9 @@ Các lệnh dùng trực tiếp Python trong môi trường ảo, không cần c
 .\.venv\Scripts\python.exe .\app.py
 ```
 
-Truy cập [http://127.0.0.1:7860](http://127.0.0.1:7860).
+Mở địa chỉ `Running on local URL` được in trong PowerShell. Thông thường là
+[http://127.0.0.1:7860](http://127.0.0.1:7860); nếu cổng bận, ứng dụng tự chọn
+cổng trống tiếp theo (ví dụ 7861) và mở đúng địa chỉ đó trong trình duyệt.
 Giữ cửa sổ PowerShell đang chạy; nhấn `Ctrl+C` để dừng server.
 Những lần sau chỉ cần chạy lại lệnh `app.py`, không phải cài thư viện lại.
 
@@ -102,7 +104,7 @@ Các tùy chọn dòng lệnh:
 # Kiểm tra model và giao diện, không mở server
 .\.venv\Scripts\python.exe .\app.py --check
 
-# Đổi cổng nếu 7860 đang được sử dụng
+# Chỉ định cổng cố định (báo lỗi rõ ràng nếu cổng này đang bận)
 .\.venv\Scripts\python.exe .\app.py --port 7861
 
 # Không tự mở trình duyệt
@@ -223,7 +225,7 @@ Chạy từ thư mục gốc sau khi cài dependency:
 
 Test bao gồm checksum/cú pháp, khởi động từ cwd khác, nạp YuNet, đầu ra model
 thật, đối chiếu website/desktop, ảnh lỗi, ngưỡng tin cậy và lịch sử/reset theo phiên.
-Hai bộ unittest hiện gồm **12 test** và đã đạt trên môi trường local.
+Hai bộ unittest hiện gồm **15 test** và đã đạt trên môi trường local.
 
 Test tự động không thay thế thử webcam vật lý, cài sạch trên máy mới hoặc
 đánh giá độ chính xác thực tế.
@@ -232,7 +234,8 @@ Test tự động không thay thế thử webcam vật lý, cài sạch trên m�
 
 - **Không nhận lệnh `py`:** kiểm tra Python 3.13 và Python Launcher đã được cài.
 - **Thiếu model/metadata:** tải đầy đủ repo và giữ vị trí file trong `models/`.
-- **Cổng bận:** dùng `--port 7861` và mở đúng địa chỉ với cổng mới.
+- **Cổng bận:** chạy không có `--port` để tự chọn cổng trống; nếu cần cổng cố định,
+  dùng `--port 7861` và mở địa chỉ mới. Không cần tắt mọi tiến trình Python.
 - **Webcam trống:** dùng Chrome/Edge, cấp quyền camera và đóng app khác đang giữ camera.
 - **Lỗi DLL TensorFlow:** xem [hướng dẫn Windows của TensorFlow](https://www.tensorflow.org/install/pip#windows-native); không tải DLL từ nguồn không rõ.
 - **Checksum không khớp:** kiểm tra file bị thiếu/thay đổi; không tạo lại manifest chỉ để bỏ qua lỗi.

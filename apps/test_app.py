@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import unittest
+import io
+from contextlib import redirect_stderr
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 import cv2
 import numpy as np
@@ -17,6 +20,7 @@ from apps.app import (
     format_prediction,
     prepare_rgb_image,
     smooth_prediction,
+    main,
 )
 from apps.desktop_test_app import DriverStateApp
 
@@ -25,6 +29,40 @@ class TestWeb(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.predictor = Predictor()
+
+    def test_default_launch_automatically_selects_local_port(self):
+        demo = Mock()
+        with patch("sys.argv", ["app.py", "--no-browser"]), patch(
+            "apps.app.Predictor"
+        ), patch("apps.app.build_demo", return_value=demo):
+            main()
+        demo.launch.assert_called_once_with(
+            server_name="127.0.0.1", server_port=None, share=False, inbrowser=False,
+        )
+
+    def test_explicit_busy_port_has_actionable_error(self):
+        demo = Mock()
+        demo.launch.side_effect = OSError("Cannot find empty port in range: 7860-7860")
+        stderr = io.StringIO()
+        with patch("sys.argv", ["app.py", "--port", "7860"]), patch(
+            "apps.app.Predictor"
+        ), patch("apps.app.build_demo", return_value=demo), redirect_stderr(stderr):
+            with self.assertRaises(SystemExit) as result:
+                main()
+        self.assertEqual(result.exception.code, 1)
+        self.assertIn("Cổng 7860 đang bận", stderr.getvalue())
+        self.assertIn("Bỏ --port", stderr.getvalue())
+        self.assertEqual(demo.launch.call_args.kwargs["server_port"], 7860)
+
+    def test_invalid_port_is_rejected_before_loading_model(self):
+        for port in ("0", "65536"):
+            with self.subTest(port=port), patch("sys.argv", ["app.py", "--port", port]), patch(
+                "apps.app.Predictor"
+            ) as load_model, redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as result:
+                    main()
+                self.assertEqual(result.exception.code, 2)
+                load_model.assert_not_called()
 
     def test_real_model_matches_frozen_desktop_inference(self):
         rng = np.random.default_rng(42)

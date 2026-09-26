@@ -218,21 +218,36 @@ def main() -> None:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Website local thử ảnh và webcam với model.")
-    parser.add_argument("--port", type=int, default=7860, help="Cổng localhost (mặc định 7860).")
+    parser.add_argument(
+        "--port", type=int, default=None,
+        help="Cổng localhost cố định; mặc định tự tìm cổng trống từ 7860.",
+    )
     parser.add_argument("--no-browser", action="store_true", help="Không tự mở trình duyệt.")
     parser.add_argument("--check", action="store_true", help="Kiểm tra model và giao diện, không mở máy chủ.")
     args = parser.parse_args()
-    if not 1 <= args.port <= 65535:
+    if args.port is not None and not 1 <= args.port <= 65535:
         parser.error("Cổng phải nằm trong khoảng 1–65535.")
     predictor = Predictor()
     demo = build_demo(predictor)
     if args.check:
         print("Model và giao diện đã sẵn sàng: RGB 224×224, alert/drowsy/yawning.")
         return
-    demo.launch(
-        server_name="127.0.0.1", server_port=args.port,
-        share=False, inbrowser=not args.no_browser,
-    )
+    try:
+        demo.launch(
+            server_name="127.0.0.1", server_port=args.port,
+            share=False, inbrowser=not args.no_browser,
+        )
+    except OSError as exc:
+        if "Cannot find empty port" not in str(exc):
+            raise
+        if args.port is None:
+            message = "Không tìm được cổng trống. Thử chọn cổng khác bằng --port <số cổng>."
+        else:
+            message = (
+                f"Cổng {args.port} đang bận hoặc không thể sử dụng. "
+                "Bỏ --port để tự chọn cổng trống, hoặc dùng --port <số cổng khác>."
+            )
+        parser.exit(1, message + "\n")
 
 
 if __name__ == "__main__":
