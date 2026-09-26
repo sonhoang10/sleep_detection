@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "source_version": "frozen V3 export; no retraining",
+  "files": {
+    ".gitattributes": {
+      "size_bytes": 145,
+      "sha256": "bd42ae2834ae036f0258375cc482347b7a14844bb19916d6109ee05e93a2ac59"
+    },
+    ".gitignore": {
+      "size_bytes": 737,
+      "sha256": "d049029399caf6a119aa507b05053e7256aa1230b77af6cbe4c9e0aa8e015b3c"
+    },
+    "README.md": {
+      "size_bytes": 13091,
+      "sha256": "5e0acee23e94dbfa90383fc0f86328fe699f2e6c95a7c7637b77b518a2c7c0ee"
+    },
+    "LICENSE": {
+      "size_bytes": 1095,
+      "sha256": "afcc864375d26c7e8d51a00894a0a2b6415477029254dda0aef532d4fc590f22"
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "size_bytes": 1408,
+      "sha256": "7fa8ca56c16763dc9731996f84bed05ce83daa151de5ac76fddbaa4d14545369"
+    },
+    "licenses/YuNet-LICENSE.txt": {
+      "size_bytes": 1086,
+      "sha256": "2ad92c7a6eb7aebede4e19f5ec4930c8bd9d614dbb8e75be1f740edae346734c"
+    },
+    "app.py": {
+      "size_bytes": 146,
+      "sha256": "bf23789dc759a29c2ac67a340f499c2aa4be1b57510d4723c0de526d862d80f4"
+    },
+    "requirements.txt": {
+      "size_bytes": 147,
+      "sha256": "a7dfddafa0126dd1e26dcb180000753060bb0fbcd9b2d65d63f983186819e820"
+    },
+    "final_training.ipynb": {
+      "size_bytes": 238806,
+      "sha256": "fb48a9b71e5363f4ebd18e54fe4388683322034768a5997e43dced1464eb0593"
+    },
+    "apps/version_3_web/app.py": {
+      "size_bytes": 10171,
+      "sha256": "8b82546d7d722ed677eff4eb709f4fc09ce7320711c675dab6c104ff2c6d920a"
+    },
+    "apps/version_3_web/requirements.txt": {
+      "size_bytes": 15,
+      "sha256": "cafdd16bddc88c09575a80b3d05070a9a50c23bb028cebc0a24e4dbd745ae587"
+    },
+    "apps/version_3_web/test_app.py": {
+      "size_bytes": 4159,
+      "sha256": "ba6d4a9d7eca984ac78e901d3d84de38c15b2d3504bbc7d7d95a942ac9f60f61"
+    },
+    "versions/version_3/class_names.json": {
+      "size_bytes": 299,
+      "sha256": "7340e89b759d6a356943bed8e9466b5a26813d315e5046f1b5c625fbe7464dd8"
+    },
+    "versions/version_3/desktop_test_app.py": {
+      "size_bytes": 20764,
+      "sha256": "062897320f50a8e86280b6ee6b01520f2b88559a3b573f315ca01f2f350a15d9"
+    },
+    "versions/version_3/face_app.py": {
+      "size_bytes": 26837,
+      "sha256": "90c74997ba509936a006dd31be9c78de0099d0fd319b7447af5072d702999d07"
+    },
+    "versions/version_3/driver_drowsiness_cnn.keras": {
+      "size_bytes": 26079093,
+      "sha256": "4f191cff4583269e46297cd3ef3aaee99b2bffa3c6896c52c9d90e5154321794"
+    },
+    "versions/version_3/face_detection_yunet_2023mar.onnx": {
+      "size_bytes": 232589,
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
+    },
+    "versions/version_3/requirements-desktop.txt": {
+      "size_bytes": 86,
+      "sha256": "ea8d14bb9411a3ccbb9bbd028d3a636e0157bebc7ae00ec78db98faf3fe55d30"
+    },
+    "tools/check_bundle.py": {
+      "size_bytes": 3662,
+      "sha256": "462359e7d994ad164059908c29a9f079b4f825bbb602e83d6ec662c31b7c65e3"
+    },
+    "tests/test_bundle.py": {
+      "size_bytes": 1900,
+      "sha256": "982bce684fe23aa395b450378ff00bbc4484a54350f0cc1896c86ad7ffb869a0"
+    }
+  }
+}

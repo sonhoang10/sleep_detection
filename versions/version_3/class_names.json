@@ -1,0 +1,22 @@
+{
+  "class_names": [
+    "alert",
+    "drowsy",
+    "yawning"
+  ],
+  "class_to_index": {
+    "alert": 0,
+    "drowsy": 1,
+    "yawning": 2
+  },
+  "input_size": [
+    224,
+    224
+  ],
+  "input_color": "RGB",
+  "input_range": [
+    0,
+    255
+  ],
+  "preprocessing": "Embedded Rescaling to [-1, 1]"
+}

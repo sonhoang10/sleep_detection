@@ -1,0 +1,47 @@
+# Local Python environments and caches
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+kaggle.json
+credentials*.json
+*.pem
+*.key
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
+
+# Datasets, user camera captures and newly trained artifacts
+/data/
+/datasets/
+/driver_drowsiness/
+/outputs/
+/runs/
+/checkpoints/
+/captures/
+/gradio_cached_examples/
+*.log
+*.part
+*.zip
+*.tar
+*.tar.gz
+*.h5
+*.keras
+*.onnx
+
+# These two shipped weights MUST be included on GitHub.
+!/versions/version_3/driver_drowsiness_cnn.keras
+!/versions/version_3/face_detection_yunet_2023mar.onnx
+
+# Do not ignore notebooks: final_training.ipynb must be shared.
