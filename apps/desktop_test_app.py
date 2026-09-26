@@ -1,9 +1,9 @@
 r"""Ứng dụng desktop thử model bằng ảnh hoặc camera máy tính.
 
 Chạy:
-    .\.venv\Scripts\python.exe .\versions\version_3\desktop_test_app.py
+    .\.venv\Scripts\python.exe .\apps\desktop_test_app.py
 
-Đặt ``driver_drowsiness_cnn.keras`` và ``class_names.json`` cạnh file này,
+Đặt ``driver_drowsiness_cnn.keras`` và ``class_names.json`` trong thư mục ``models/``,
 hoặc dùng nút "Chọn model" khi ứng dụng mở.
 """
 
@@ -31,13 +31,13 @@ except ModuleNotFoundError as exc:
         f"Thiếu {missing_package} trong Python {sys.version_info.major}.{sys.version_info.minor}.\n"
         "Hãy mở PowerShell trong thư mục dự án và chạy:\n"
         "py -3.13 -m venv .venv\n"
-        r".\.venv\Scripts\python.exe -m pip install -r .\versions\version_3\requirements-desktop.txt"
+        r".\.venv\Scripts\python.exe -m pip install -r .\requirements.txt"
         "\nSau đó chạy:\n"
-        r".\.venv\Scripts\python.exe .\versions\version_3\desktop_test_app.py"
+        r".\.venv\Scripts\python.exe .\apps\desktop_test_app.py"
     ) from exc
 
 
-APP_DIR = Path(__file__).resolve().parent
+APP_DIR = Path(__file__).resolve().parents[1] / "models"
 MODEL_CANDIDATES = (
     APP_DIR / "driver_drowsiness_cnn.keras",
     APP_DIR / "best_finetuned_model.keras",

@@ -41,7 +41,7 @@ Thumbs.db
 *.onnx
 
 # These two shipped weights MUST be included on GitHub.
-!/versions/version_3/driver_drowsiness_cnn.keras
-!/versions/version_3/face_detection_yunet_2023mar.onnx
+!/models/driver_drowsiness_cnn.keras
+!/models/face_detection_yunet_2023mar.onnx
 
 # Do not ignore notebooks: final_training.ipynb must be shared.

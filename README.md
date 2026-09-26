@@ -1,4 +1,4 @@
-# Sleep Detection V3
+# Sleep Detection
 
 Ứng dụng thử nghiệm nhận biết trạng thái tài xế từ ảnh và webcam bằng model
 MobileNetV2 đã huấn luyện. Giao diện web sử dụng Gradio, hỗ trợ tiếng Việt và
@@ -57,7 +57,7 @@ Clone repository hoặc chọn **Code → Download ZIP** trên GitHub rồi gi�
 Mở PowerShell tại thư mục chứa `app.py` và `requirements.txt`.
 
 Phải tải đầy đủ repository, bao gồm model và `class_names.json` trong
-`versions/version_3/`. Không đổi cấu trúc thư mục và không sao chép môi trường
+`models/`. Không đổi cấu trúc thư mục và không sao chép môi trường
 ảo từ máy khác.
 
 ### 2. Tạo môi trường và cài thư viện
@@ -120,13 +120,13 @@ Với cổng 7861, truy cập `http://127.0.0.1:7861`. Địa chỉ localhost ch
 Thử ảnh hoặc camera bằng Tkinter với classifier toàn khung hình:
 
 ```powershell
-.\.venv\Scripts\python.exe .\versions\version_3\desktop_test_app.py
+.\.venv\Scripts\python.exe .\apps\desktop_test_app.py
 ```
 
 Nhánh thử nghiệm phát hiện và crop khuôn mặt bằng YuNet:
 
 ```powershell
-.\.venv\Scripts\python.exe .\versions\version_3\face_app.py
+.\.venv\Scripts\python.exe .\apps\face_app.py
 ```
 
 Crop mặt thay đổi vùng ảnh đầu vào nên có thể cho kết quả khác website.
@@ -142,18 +142,14 @@ sleep_detection/
 ├── final_training.ipynb            # Notebook Colab với output lịch sử
 ├── bundle_manifest.json            # SHA-256 của các file phân phối
 ├── apps/
-│   └── version_3_web/
-│       ├── app.py                  # Giao diện và inference Gradio
-│       ├── requirements.txt
-│       └── test_app.py             # Test model thật và callback
-├── versions/
-│   └── version_3/
-│       ├── driver_drowsiness_cnn.keras
-│       ├── class_names.json        # Metadata input và thứ tự lớp
-│       ├── desktop_test_app.py
-│       ├── face_app.py
-│       ├── face_detection_yunet_2023mar.onnx
-│       └── requirements-desktop.txt
+│   ├── app.py                      # Giao diện và inference Gradio
+│   ├── desktop_test_app.py          # App Tkinter toàn khung hình
+│   ├── face_app.py                  # Nhánh thử nghiệm crop mặt
+│   └── test_app.py                  # Test model thật và callback
+├── models/
+│   ├── driver_drowsiness_cnn.keras
+│   ├── class_names.json            # Metadata input và thứ tự lớp
+│   └── face_detection_yunet_2023mar.onnx
 ├── tests/
 │   └── test_bundle.py              # Test toàn vẹn và portability
 ├── tools/
@@ -171,7 +167,7 @@ Hai file trọng số đi kèm được cho phép track trong `.gitignore`.
 
 ## Model và xử lý ảnh
 
-V3 dùng backbone MobileNetV2 với đầu ra phân loại ba lớp. Website và app desktop
+Model dùng backbone MobileNetV2 với đầu ra phân loại ba lớp. Website và app desktop
 mặc định xử lý **toàn ảnh**, không tự phát hiện/crop khuôn mặt.
 
 1. Đưa ảnh về RGB, đổi kích thước thành `224×224`.
@@ -179,7 +175,7 @@ mặc định xử lý **toàn ảnh**, không tự phát hiện/crop khuôn m�
 3. Model tự chuẩn hóa qua lớp Rescaling đã tích hợp và trả ba xác suất.
 4. Hiển thị lớp có xác suất cao nhất hoặc trạng thái chưa đủ chắc chắn.
 
-Thứ tự output trong [class_names.json](versions/version_3/class_names.json):
+Thứ tự output trong [class_names.json](models/class_names.json):
 
 - `0`: `alert` — tỉnh táo.
 - `1`: `drowsy` — buồn ngủ / mắt nhắm.
@@ -221,13 +217,13 @@ Chạy từ thư mục gốc sau khi cài dependency:
 ```powershell
 .\.venv\Scripts\python.exe .\tools\check_bundle.py
 .\.venv\Scripts\python.exe -m unittest discover -s .\tests -v
-.\.venv\Scripts\python.exe -m unittest apps.version_3_web.test_app -v
+.\.venv\Scripts\python.exe -m unittest apps.test_app -v
 .\.venv\Scripts\python.exe .\app.py --check
 ```
 
 Test bao gồm checksum/cú pháp, khởi động từ cwd khác, nạp YuNet, đầu ra model
 thật, đối chiếu website/desktop, ảnh lỗi, ngưỡng tin cậy và lịch sử/reset theo phiên.
-Hai bộ unittest hiện gồm **11 test** và đã đạt trên môi trường local.
+Hai bộ unittest hiện gồm **12 test** và đã đạt trên môi trường local.
 
 Test tự động không thay thế thử webcam vật lý, cài sạch trên máy mới hoặc
 đánh giá độ chính xác thực tế.
@@ -235,7 +231,7 @@ Test tự động không thay thế thử webcam vật lý, cài sạch trên m�
 ## Xử lý lỗi
 
 - **Không nhận lệnh `py`:** kiểm tra Python 3.13 và Python Launcher đã được cài.
-- **Thiếu model/metadata:** tải đầy đủ repo và giữ vị trí file trong `versions/version_3/`.
+- **Thiếu model/metadata:** tải đầy đủ repo và giữ vị trí file trong `models/`.
 - **Cổng bận:** dùng `--port 7861` và mở đúng địa chỉ với cổng mới.
 - **Webcam trống:** dùng Chrome/Edge, cấp quyền camera và đóng app khác đang giữ camera.
 - **Lỗi DLL TensorFlow:** xem [hướng dẫn Windows của TensorFlow](https://www.tensorflow.org/install/pip#windows-native); không tải DLL từ nguồn không rõ.
@@ -243,7 +239,7 @@ Test tự động không thay thế thử webcam vật lý, cài sạch trên m�
 
 ## Giới hạn và quyền riêng tư
 
-- V3 phân loại frame, không xác nhận sự kiện buồn ngủ kéo dài. Ngáp không đồng
+- Model phân loại frame, không xác nhận sự kiện buồn ngủ kéo dài. Ngáp không đồng
   nghĩa buồn ngủ; mắt nhắm có thể chỉ là chớp mắt.
 - Model không có lớp “không có mặt”; website vẫn có thể trả dự đoán cho ảnh không có mặt.
 - Ánh sáng, nền, kính, góc mặt và camera khác nguồn training có thể làm dự đoán sai.

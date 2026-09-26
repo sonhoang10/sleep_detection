@@ -1,86 +1,78 @@
 {
   "schema_version": 1,
-  "source_version": "frozen V3 export; no retraining",
+  "source": "Sleep Detection; no retraining",
   "files": {
     ".gitattributes": {
       "size_bytes": 145,
       "sha256": "bd42ae2834ae036f0258375cc482347b7a14844bb19916d6109ee05e93a2ac59"
     },
     ".gitignore": {
-      "size_bytes": 737,
-      "sha256": "d049029399caf6a119aa507b05053e7256aa1230b77af6cbe4c9e0aa8e015b3c"
+      "size_bytes": 713,
+      "sha256": "484c494b2a3ff43d06eb252fa29c765b46541aa9f30430fc047b8618a79fa0ee"
     },
     "README.md": {
-      "size_bytes": 13091,
-      "sha256": "5e0acee23e94dbfa90383fc0f86328fe699f2e6c95a7c7637b77b518a2c7c0ee"
+      "size_bytes": 12952,
+      "sha256": "f3bcdf7abfe7d5ea1f1c78388d3db7fe8a42f21957cc007a770dc93a076abd97"
     },
     "LICENSE": {
       "size_bytes": 1095,
       "sha256": "afcc864375d26c7e8d51a00894a0a2b6415477029254dda0aef532d4fc590f22"
     },
     "THIRD_PARTY_NOTICES.md": {
-      "size_bytes": 1408,
-      "sha256": "7fa8ca56c16763dc9731996f84bed05ce83daa151de5ac76fddbaa4d14545369"
+      "size_bytes": 1414,
+      "sha256": "9ac1247302d763ee63a7c05ffb597100cada9531f51aee1430ccdc7d0e1cfe59"
     },
     "licenses/YuNet-LICENSE.txt": {
       "size_bytes": 1086,
       "sha256": "2ad92c7a6eb7aebede4e19f5ec4930c8bd9d614dbb8e75be1f740edae346734c"
     },
     "app.py": {
-      "size_bytes": 146,
-      "sha256": "bf23789dc759a29c2ac67a340f499c2aa4be1b57510d4723c0de526d862d80f4"
+      "size_bytes": 135,
+      "sha256": "e839938508d6a1058360be9795190309d32856978be8ae9fa581ea802a9b9e22"
     },
     "requirements.txt": {
-      "size_bytes": 147,
-      "sha256": "a7dfddafa0126dd1e26dcb180000753060bb0fbcd9b2d65d63f983186819e820"
+      "size_bytes": 132,
+      "sha256": "7f6a2863bd8a1ac2ec0b26ebb32598be0e13d19482df51cf94390c5d289196dd"
     },
     "final_training.ipynb": {
       "size_bytes": 238806,
       "sha256": "fb48a9b71e5363f4ebd18e54fe4388683322034768a5997e43dced1464eb0593"
     },
-    "apps/version_3_web/app.py": {
-      "size_bytes": 10171,
-      "sha256": "8b82546d7d722ed677eff4eb709f4fc09ce7320711c675dab6c104ff2c6d920a"
+    "apps/app.py": {
+      "size_bytes": 10143,
+      "sha256": "b8367b9fc2d972d31c8186a27e36c7abdca24422f802e29da05e6e117443efd6"
     },
-    "apps/version_3_web/requirements.txt": {
-      "size_bytes": 15,
-      "sha256": "cafdd16bddc88c09575a80b3d05070a9a50c23bb028cebc0a24e4dbd745ae587"
+    "apps/test_app.py": {
+      "size_bytes": 4120,
+      "sha256": "772bf51d31dac11874ffe58570da205d89a0477c1b60292b610b098c6d2d1bb2"
     },
-    "apps/version_3_web/test_app.py": {
-      "size_bytes": 4159,
-      "sha256": "ba6d4a9d7eca984ac78e901d3d84de38c15b2d3504bbc7d7d95a942ac9f60f61"
+    "apps/desktop_test_app.py": {
+      "size_bytes": 20736,
+      "sha256": "5faef1f53c48658d99b0a0bf08912fd9ed929a289c1515dec0b2c9ed677e4fe9"
     },
-    "versions/version_3/class_names.json": {
+    "apps/face_app.py": {
+      "size_bytes": 26223,
+      "sha256": "0aaf7158a82abd17f264d9602e05130ea53c1d302cd3ad5e58abc4fdc220cdd0"
+    },
+    "models/class_names.json": {
       "size_bytes": 299,
       "sha256": "7340e89b759d6a356943bed8e9466b5a26813d315e5046f1b5c625fbe7464dd8"
     },
-    "versions/version_3/desktop_test_app.py": {
-      "size_bytes": 20764,
-      "sha256": "062897320f50a8e86280b6ee6b01520f2b88559a3b573f315ca01f2f350a15d9"
-    },
-    "versions/version_3/face_app.py": {
-      "size_bytes": 26837,
-      "sha256": "90c74997ba509936a006dd31be9c78de0099d0fd319b7447af5072d702999d07"
-    },
-    "versions/version_3/driver_drowsiness_cnn.keras": {
+    "models/driver_drowsiness_cnn.keras": {
       "size_bytes": 26079093,
       "sha256": "4f191cff4583269e46297cd3ef3aaee99b2bffa3c6896c52c9d90e5154321794"
     },
-    "versions/version_3/face_detection_yunet_2023mar.onnx": {
+    "models/face_detection_yunet_2023mar.onnx": {
       "size_bytes": 232589,
       "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
     },
-    "versions/version_3/requirements-desktop.txt": {
-      "size_bytes": 86,
-      "sha256": "ea8d14bb9411a3ccbb9bbd028d3a636e0157bebc7ae00ec78db98faf3fe55d30"
-    },
     "tools/check_bundle.py": {
-      "size_bytes": 3662,
-      "sha256": "462359e7d994ad164059908c29a9f079b4f825bbb602e83d6ec662c31b7c65e3"
+      "size_bytes": 3467,
+      "sha256": "297bb5c6ce3d81f0ae10b7909881dd65ec92e657e3889862aa823d530315d0ec"
     },
     "tests/test_bundle.py": {
-      "size_bytes": 1900,
-      "sha256": "982bce684fe23aa395b450378ff00bbc4484a54350f0cc1896c86ad7ffb869a0"
+      "size_bytes": 2306,
+      "sha256": "0554519bcb873316b54d6ef114ef8638557ade2d401bb5d918e91fd5021f8ba9"
     }
   }
 }

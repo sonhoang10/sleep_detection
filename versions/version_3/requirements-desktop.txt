@@ -1,4 +1,0 @@
-# Python 3.13, Windows 64-bit
-tensorflow==2.21.0
-opencv-python==5.0.0.93
-numpy==2.5.3

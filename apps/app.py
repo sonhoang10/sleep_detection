@@ -1,4 +1,4 @@
-"""Local Gradio demo for the frozen Version 3 classifier."""
+"""Local Gradio demo for the Sleep Detection classifier."""
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ import numpy as np
 import tensorflow as tf
 
 
-REPOSITORY_DIR = Path(__file__).resolve().parents[2]
-MODEL_DIR = REPOSITORY_DIR / "versions" / "version_3"
+REPOSITORY_DIR = Path(__file__).resolve().parents[1]
+MODEL_DIR = REPOSITORY_DIR / "models"
 MODEL_PATH = MODEL_DIR / "driver_drowsiness_cnn.keras"
 METADATA_PATH = MODEL_DIR / "class_names.json"
 EXPECTED_CLASSES = ("alert", "drowsy", "yawning")
@@ -38,7 +38,7 @@ STATUS_MESSAGES = {
 
 
 def prepare_rgb_image(image: np.ndarray, input_size: tuple[int, int]) -> np.ndarray:
-    """Match V3 desktop inference after its BGR-to-RGB conversion."""
+    """Match desktop inference after its BGR-to-RGB conversion."""
     if image is None:
         raise ValueError("Chưa có ảnh để kiểm tra.")
     array = np.asarray(image)
@@ -55,35 +55,35 @@ def prepare_rgb_image(image: np.ndarray, input_size: tuple[int, int]) -> np.ndar
     ).astype(np.float32)
 
 
-class V3Predictor:
+class Predictor:
     def __init__(self, model_path: Path = MODEL_PATH, metadata_path: Path = METADATA_PATH):
         if not model_path.is_file() or not metadata_path.is_file():
             raise FileNotFoundError(
-                f"Cần cả model và metadata V3: {model_path} ; {metadata_path}"
+                f"Cần cả model và metadata: {model_path} ; {metadata_path}"
             )
         with metadata_path.open(encoding="utf-8") as file:
             metadata = json.load(file)
         self.class_names = tuple(metadata.get("class_names", ()))
         if self.class_names != EXPECTED_CLASSES:
-            raise ValueError(f"Thứ tự lớp V3 không hợp lệ: {self.class_names}")
+            raise ValueError(f"Thứ tự lớp không hợp lệ: {self.class_names}")
         if metadata.get("class_to_index") != {
             name: index for index, name in enumerate(self.class_names)
         }:
             raise ValueError("class_to_index không khớp class_names.")
         if metadata.get("input_color") != "RGB" or metadata.get("input_range") != [0, 255]:
-            raise ValueError("Hợp đồng màu/range của model V3 không khớp.")
+            raise ValueError("Hợp đồng màu/range của model không khớp.")
         self.input_size = tuple(metadata.get("input_size", ()))
         if self.input_size != (224, 224):
-            raise ValueError(f"Kích thước input V3 không hợp lệ: {self.input_size}")
+            raise ValueError(f"Kích thước input không hợp lệ: {self.input_size}")
 
         self.model = tf.keras.models.load_model(model_path, compile=False)
         input_shape = self.model.input_shape
         if isinstance(input_shape, list):
             input_shape = input_shape[0]
         if tuple(input_shape[1:]) != (224, 224, 3):
-            raise ValueError(f"Model V3 có input không hợp lệ: {input_shape}")
+            raise ValueError(f"Model có input không hợp lệ: {input_shape}")
         if self.model.output_shape[-1] != len(self.class_names):
-            raise ValueError("Số output của model không khớp metadata V3.")
+            raise ValueError("Số output của model không khớp metadata.")
         self.model_path = model_path
 
         # Fail at startup rather than after the first image is submitted.
@@ -93,7 +93,7 @@ class V3Predictor:
         output = np.asarray(self.model(prepared_image[None, ...], training=False))[0]
         output = output.astype(np.float64)
         if output.shape != (len(self.class_names),) or not np.isfinite(output).all():
-            raise ValueError(f"Output model V3 không hợp lệ: {output.shape}")
+            raise ValueError(f"Output model không hợp lệ: {output.shape}")
         if (output < 0).any() or not np.isclose(output.sum(), 1.0, atol=1e-3):
             output = tf.nn.softmax(output).numpy()
         return output
@@ -128,7 +128,7 @@ def smooth_prediction(
     return np.mean(updated, axis=0), updated
 
 
-def build_demo(predictor: V3Predictor):
+def build_demo(predictor: Predictor):
     import gradio as gr
 
     def predict_image(image):
@@ -157,11 +157,11 @@ def build_demo(predictor: V3Predictor):
     def reset_image():
         return {}, "Hãy tải một ảnh lên."
 
-    with gr.Blocks(title="Thử model V3 — trạng thái tài xế") as demo:
+    with gr.Blocks(title="Sleep Detection — trạng thái tài xế") as demo:
         gr.Markdown(
-            "# Thử model nhận biết trạng thái tài xế · V3\n"
+            "# Sleep Detection · Nhận biết trạng thái tài xế\n"
             "Tải ảnh hoặc bật webcam để xem dự đoán **tỉnh táo**, **buồn ngủ / mắt nhắm**, "
-            "**đang ngáp**. Model V3 phân loại từng khung hình; kết quả chỉ phục vụ nghiên cứu "
+            "**đang ngáp**. Model phân loại từng khung hình; kết quả chỉ phục vụ nghiên cứu "
             "và không thay thế thiết bị cảnh báo an toàn."
         )
         with gr.Tab("Tải ảnh"):
@@ -177,7 +177,7 @@ def build_demo(predictor: V3Predictor):
                 inputs=uploaded_image,
                 outputs=[image_scores, image_status],
                 concurrency_limit=1,
-                concurrency_id="v3_inference",
+                concurrency_id="sleep_detection_inference",
             )
             uploaded_image.clear(reset_image, outputs=[image_scores, image_status])
 
@@ -198,7 +198,7 @@ def build_demo(predictor: V3Predictor):
                 stream_every=0.5,
                 time_limit=3600,
                 concurrency_limit=1,
-                concurrency_id="v3_inference",
+                concurrency_id="sleep_detection_inference",
             )
             webcam.clear(
                 reset_webcam,
@@ -217,17 +217,17 @@ def main() -> None:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8")
-    parser = argparse.ArgumentParser(description="Website local thử ảnh và webcam với model V3.")
+    parser = argparse.ArgumentParser(description="Website local thử ảnh và webcam với model.")
     parser.add_argument("--port", type=int, default=7860, help="Cổng localhost (mặc định 7860).")
     parser.add_argument("--no-browser", action="store_true", help="Không tự mở trình duyệt.")
     parser.add_argument("--check", action="store_true", help="Kiểm tra model và giao diện, không mở máy chủ.")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error("Cổng phải nằm trong khoảng 1–65535.")
-    predictor = V3Predictor()
+    predictor = Predictor()
     demo = build_demo(predictor)
     if args.check:
-        print("Model V3 và giao diện đã sẵn sàng: RGB 224×224, alert/drowsy/yawning.")
+        print("Model và giao diện đã sẵn sàng: RGB 224×224, alert/drowsy/yawning.")
         return
     demo.launch(
         server_name="127.0.0.1", server_port=args.port,

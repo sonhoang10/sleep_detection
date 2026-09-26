@@ -1,4 +1,4 @@
-"""Focused checks for the local V3 web wrapper."""
+"""Focused checks for the local web wrapper."""
 
 from __future__ import annotations
 
@@ -9,22 +9,22 @@ from types import SimpleNamespace
 import cv2
 import numpy as np
 
-from apps.version_3_web.app import (
+from apps.app import (
     CONFIDENCE_THRESHOLD,
     SMOOTHING_FRAMES,
-    V3Predictor,
+    Predictor,
     build_demo,
     format_prediction,
     prepare_rgb_image,
     smooth_prediction,
 )
-from versions.version_3.desktop_test_app import DriverStateApp
+from apps.desktop_test_app import DriverStateApp
 
 
-class TestV3Web(unittest.TestCase):
+class TestWeb(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.predictor = V3Predictor()
+        cls.predictor = Predictor()
 
     def test_real_model_matches_frozen_desktop_inference(self):
         rng = np.random.default_rng(42)
@@ -76,7 +76,7 @@ class TestV3Web(unittest.TestCase):
 
     def test_missing_model_is_reported(self):
         with self.assertRaises(FileNotFoundError):
-            V3Predictor(Path("missing.keras"), Path("missing.json"))
+            Predictor(Path("missing.keras"), Path("missing.json"))
 
     def test_gradio_image_and_camera_callbacks(self):
         demo = build_demo(self.predictor)

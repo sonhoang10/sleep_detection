@@ -19,12 +19,9 @@ BUNDLED_FILES = (
     ".gitattributes", ".gitignore", "README.md", "LICENSE",
     "THIRD_PARTY_NOTICES.md", "licenses/YuNet-LICENSE.txt",
     "app.py", "requirements.txt", "final_training.ipynb",
-    "apps/version_3_web/app.py", "apps/version_3_web/requirements.txt",
-    "apps/version_3_web/test_app.py", "versions/version_3/class_names.json",
-    "versions/version_3/desktop_test_app.py", "versions/version_3/face_app.py",
-    "versions/version_3/driver_drowsiness_cnn.keras",
-    "versions/version_3/face_detection_yunet_2023mar.onnx",
-    "versions/version_3/requirements-desktop.txt",
+    "apps/app.py", "apps/test_app.py", "apps/desktop_test_app.py", "apps/face_app.py",
+    "models/class_names.json", "models/driver_drowsiness_cnn.keras",
+    "models/face_detection_yunet_2023mar.onnx",
     "tools/check_bundle.py", "tests/test_bundle.py",
 )
 
@@ -59,7 +56,7 @@ def validate_sources(root: Path = ROOT) -> tuple[int, int]:
             ast.parse((root / name).read_text(encoding="utf-8-sig"), filename=name)
     notebook = json.loads((root / "final_training.ipynb").read_text(encoding="utf-8"))
     if notebook.get("nbformat") != 4:
-        raise ValueError("Expected a v4 notebook")
+        raise ValueError("Expected notebook format 4")
     code_cells = 0
     for index, cell in enumerate(notebook["cells"]):
         if cell["cell_type"] == "code":
@@ -77,7 +74,7 @@ def main() -> None:
         if args.write_manifest:
             manifest = {
                 "schema_version": 1,
-                "source_version": "frozen V3 export; no retraining",
+                "source": "Sleep Detection; no retraining",
                 "files": inventory(),
             }
             MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
